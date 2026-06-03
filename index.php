@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,20 +38,25 @@
 
 <div class="container">
 
-    <div class="card">
-        <h3>Camisa</h3>
-        <p class="price">$30</p>
-    </div>
+    <?php
+    $conn = new mysqli("mysql-svc", "root", "123456", "tienda");
 
-    <div class="card">
-        <h3>Jeans</h3>
-        <p class="price">$50</p>
-    </div>
+    if ($conn->connect_error) {
+        die("Error conexión");
+    }
 
-    <div class="card">
-        <h3>Chaqueta</h3>
-        <p class="price">$80</p>
-    </div>
+    $result = $conn->query("SELECT * FROM productos");
+
+    while($row = $result->fetch_assoc()) {
+        echo "
+        <div class='card'>
+            <h3>{$row['nombre']}</h3>
+            <p class='price'>\${$row['precio']}</p>
+        </div>";
+    }
+
+    $conn->close();
+    ?>
 
 </div>
 
